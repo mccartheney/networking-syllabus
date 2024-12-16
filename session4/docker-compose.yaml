@@ -1,0 +1,50 @@
+networks:
+  web1_net:
+    driver: bridge
+  web2_net:
+    driver: bridge
+  web3_net:
+    driver: bridge
+
+services:
+  web1:
+    image: nginx
+    ports:
+      - 8000:80
+    networks:
+      - web1_net
+
+  web2:
+    image: nginx
+    ports:
+      - 8001:80
+    networks:
+      - web2_net
+
+  web3:
+    image: nginx
+    ports:
+      - 8003:80
+    networks:
+      - web3_net
+
+  proxy:
+    image: nginx:latest
+    ports:
+      - 8080:80
+    networks:
+      - web1_net
+      - web2_net
+      - web3_net
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+  os :
+    image : alpine
+    command: sleep 3600
+    networks:       
+      - web1_net
+      - web2_net
+      - web3_net
+
+

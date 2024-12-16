@@ -1,0 +1,16 @@
+services :
+  primary :
+    build: 
+      context : .
+      dockerfile : primary.DOCKERFILE
+    
+    ports: 
+      - 8001:8001
+
+  secoundary : 
+    build: 
+      context : .
+      dockerfile : secundary.DOCKERFILE
+    
+    ports: 
+      - 8002:8002

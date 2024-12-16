@@ -1,0 +1,39 @@
+version: "3.9"
+
+networks:
+  rede1:
+    driver: bridge
+  rede2:
+    driver: bridge
+  rede3:
+    driver: bridge
+  rede_global:
+    driver: bridge
+
+services:
+  proxy:
+    image: alpine
+    command: sh -c "while true; do echo 'Proxy para conectar redes'; sleep 5; done"
+    networks:
+      - rede1
+      - rede2
+      - rede3
+      - rede_global
+
+  container1:
+    image: alpine
+    command: sh -c "while true; do echo 'Container 1'; sleep 5; done"
+    networks:
+      - rede1
+
+  container2:
+    image: alpine
+    command: sh -c "while true; do echo 'Container 2'; sleep 5; done"
+    networks:
+      - rede2
+
+  container3:
+    image: alpine
+    command: sh -c "while true; do echo 'Container 3'; sleep 5; done"
+    networks:
+      - rede3
